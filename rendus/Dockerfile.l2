@@ -1,0 +1,16 @@
+FROM golang:1.18-alpine
+
+WORKDIR /app
+
+COPY . .
+
+RUN go mod tidy
+RUN go build -o disassemble_riscv main.go disassembler.go utils.go
+
+# Copier les fichiers de test
+COPY test/ /app/test/
+
+# Définir l'argument de mode
+ARG MODE=RUN
+
+CMD ["sh", "-c", "if [ \"$MODE\" = \"TEST\" ]; then disassemble_riscv tests/test_file_2.bin; elif [ \"$MODE\" = \"RUN\" ]; then echo \"Mode run: Veuillez fournir un fichier binaire en argument.\"; else echo \"Le mode $MODE n'existe pas, veuillez choisir TEST ou RUN.\"; fi"]
