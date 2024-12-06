@@ -4,6 +4,7 @@ Ce projet est un émulateur pour l'architecture RISC-V RV32I écrit en Go.
 
 ## Structure du Projet
 
+```
 project/
 │ 
 ├── res/
@@ -22,6 +23,7 @@ project/
 │
 ├── README.md
 └── go.mod
+```
 
 ## Instructions
 
