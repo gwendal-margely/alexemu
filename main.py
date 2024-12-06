@@ -1,5 +1,13 @@
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--verbose", help="increase output verbosity", action="store_true")
+
+parser.add_argument(
+    "-f",
+    "--file",
+    help="Chemin du fichier binaire à décoder",
+    type=str,
+    required=True
+)
 args = parser.parse_args()
+print(args.file)
