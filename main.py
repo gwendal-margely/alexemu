@@ -20,7 +20,7 @@ with open(args.FICHIER_BIN, "rb") as f:
         opcode = bin(int(hex_str, 16))[2:].zfill(buffer_size * 8)[-7:]
         instruction_type, encoding = instructions[opcode]
         print(
-            str(offset).zfill(8),
+            hex(offset)[2:].zfill(8),
             hex_str,
             instruction_type,
             encoding,
