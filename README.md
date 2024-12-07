@@ -1,0 +1,1 @@
+`docker run --rm -it $(docker build -q -f livrables/Dockerfile.l1 .) tests/test_file_1.bin`
