@@ -3,11 +3,20 @@ import argparse
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
-    "-f",
-    "--file",
-    help="Chemin du fichier binaire à décoder",
+    "FICHIER_BIN",
+    help="Un fichier au format binaire contenant les instructions à décoder",
     type=str,
-    required=True
 )
 args = parser.parse_args()
-print(args.file)
+
+buffer_size = 4 # en 'bytes' (octets)
+
+offset = 0
+with open(args.FICHIER_BIN, "rb") as f:
+    while (dword := f.read(buffer_size)): # walrus operator 🤩
+        print(
+            str(offset).zfill(8),
+            dword.hex(),
+            sep=" ",
+        )
+        offset += 1
