@@ -1,0 +1,13 @@
+FROM python:3.12-alpine as builder
+
+RUN pip3 install pipenv
+RUN apk add --no-cache git
+
+WORKDIR /app
+
+COPY . .
+
+RUN git checkout -f f4f99534c9c1130900402a2e0dacb473cf07aeb4
+RUN pipenv install --system --deploy
+
+ENTRYPOINT ["python3", "main.py"]
