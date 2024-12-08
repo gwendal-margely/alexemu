@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN git checkout -f d4bf1a385df86253632926f746389eda81676c81
+RUN git reset --hard d4bf1a385df86253632926f746389eda81676c81
 RUN pipenv install --system --deploy
 
 ENTRYPOINT ["python3", "main.py"]
