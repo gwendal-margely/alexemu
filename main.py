@@ -16,11 +16,14 @@ offset = 0
 print("offset,valeur,opcode,encoding")
 with open(args.FICHIER_BIN, "rb") as f:
     while dword := f.read(buffer_size):  # walrus operator 🤩
-        opcode = bin(dword[3] & 0x7F)[2:].zfill(7)
+        hex_str = dword.hex()
+        bin_str = bin(int(hex_str, 16))[2:].zfill(32)
+
+        opcode = bin_str[-7:]
         instruction_type, encoding = instructions[opcode]
         print(
             hex(offset)[2:].zfill(8),
-            dword.hex().replace("0x", ""),
+            hex_str,
             instruction_type,
             encoding,
             sep=",",
