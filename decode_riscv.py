@@ -22,7 +22,7 @@ with open(args.FICHIER_BIN, "rb") as f:
         opcode = bin_str[-7:]
         instruction_type, encoding = instructions[opcode]
         print(
-            hex(offset)[2:].zfill(8),
+            hex(offset * 4)[2:].zfill(8),
             hex_str,
             instruction_type,
             encoding,
