@@ -1,4 +1,4 @@
-from models import Instruction
+from models import Instruction_I, Instruction_R, Instruction_S, Instruction_U
 import pandas as pd
 import argparse
 
@@ -16,7 +16,12 @@ df = pd.read_csv(
 )
 buffer_size = 4  # en 'bytes' (octets)
 
-i_type_to_class = {c.__name__[0]: c for c in Instruction.__subclasses__()}
+i_type_to_class = {
+    "I": Instruction_I,
+    "R": Instruction_R,
+    "S": Instruction_S,
+    "U": Instruction_U,
+}
 
 offset = 0
 with open(args.FICHIER_BIN, "rb") as f:
@@ -34,8 +39,12 @@ with open(args.FICHIER_BIN, "rb") as f:
             row = rows[rows["funct3"] == funct3].iloc[0]
 
         i_type = row["type_encodage"][0]
+        instruction = i_type_to_class[i_type](bin_str)
+
         print(
             hex(offset * 4)[2:].zfill(8) + ":",
-            row["instruction"],
+            row["instruction"].ljust(10),
             sep=" ",
+            end=" ",
         )
+        print(instruction)
