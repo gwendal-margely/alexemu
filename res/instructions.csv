@@ -1,4 +1,4 @@
-instruction,opcode_name,opcode_name,type_encodage,funct3,funct7,funct12
+instruction,opcode_name,opcode_value,type_encodage,funct3,funct7,funct12
 BEQ,BRANCH,11000112,SB,0002
 BNE,BRANCH,11000112,SB,0012
 BLT,BRANCH,11000112,SB,1002
