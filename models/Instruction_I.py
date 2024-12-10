@@ -1,6 +1,5 @@
 from .Instruction import Instruction
 
-
 class Instruction_I(Instruction):
 
     bitRanges = [
@@ -13,13 +12,16 @@ class Instruction_I(Instruction):
     sliceNames = ["opcode", "rd", "funct3", "rs1", "imm"]
 
     def __str__(self):
+        imm = int(self.imm, 2)
+        if imm & (1 << 11):  # Sign extend
+            imm |= 0xFFFFF000
         return (
             ", ".join(
                 [
                     hex(int(self.rd, 2))[1:],
                     hex(int(self.rs1, 2))[1:],
-                    str(int(self.imm, 2)),
+                    str(imm),
                 ]
             ).ljust(20)
-            + f"// {hex(int(self.imm, 2))}"
+            + f"// {hex(imm)}"
         )

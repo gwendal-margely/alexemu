@@ -1,10 +1,9 @@
 from .Instruction import Instruction
 
-
 class Instruction_R(Instruction):
 
     bitRanges = [
-        (0, 7),
+        (0, 6),
         (7, 11),
         (12, 14),
         (15, 19),

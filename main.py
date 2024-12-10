@@ -1,4 +1,4 @@
-from models import Instruction_I, Instruction_R, Instruction_S, Instruction_U
+from models import Instruction_I, Instruction_R, Instruction_S, Instruction_U, Instruction_B, Instruction_J
 import pandas as pd
 import argparse
 
@@ -12,7 +12,7 @@ args = parser.parse_args()
 
 df = pd.read_csv(
     "res/instructions.csv",
-    dtype={i: str for i in ["opcode_value", "funct3", "funct7", "funct1"]},
+    dtype={i: str for i in ["opcode_value", "funct3", "funct7", "funct12"]},
 )
 buffer_size = 4  # en 'bytes' (octets)
 
@@ -21,6 +21,8 @@ i_type_to_class = {
     "R": Instruction_R,
     "S": Instruction_S,
     "U": Instruction_U,
+    "B": Instruction_B,
+    "J": Instruction_J,
 }
 
 offset = 0
@@ -36,7 +38,12 @@ with open(args.FICHIER_BIN, "rb") as f:
             row = rows.iloc[0]
         else:
             funct3 = bin_str[12:15]
-            row = rows[rows["funct3"] == funct3].iloc[0]
+            rows_funct3 = rows[rows["funct3"] == funct3]
+            if rows_funct3.shape[0] == 1:
+                row = rows_funct3.iloc[0]
+            else:
+                print(f"Erreur: Combinaison opcode {opcode} et funct3 {funct3} non trouvée dans le fichier CSV.")
+                continue  # Passe à l'instruction suivante
 
         i_type = row["type_encodage"][0]
         instruction = i_type_to_class[i_type](bin_str)
@@ -48,3 +55,4 @@ with open(args.FICHIER_BIN, "rb") as f:
             end=" ",
         )
         print(instruction)
+        offset += 1
